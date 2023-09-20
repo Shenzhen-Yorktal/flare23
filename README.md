@@ -14,8 +14,7 @@ The [Training](/Training), [Inference](/Inference) and [Evaluation](/Evaluation/
 * python >= 3.8  
 For training, please follow the install of nnUNet.
 ## Dataset
-The training Data and validation data are provided by the [FLARE23](https://codalab.lisn.upsaclay.fr/competitions/12239#learn_the_details-dataset)
-In short, there are 2200 partial labeled and 1800 unlabeled data for training, 100 public cases for validation and 200 hidden cases for the final test.
+The training Data and validation data are provided by the [FLARE23](https://codalab.lisn.upsaclay.fr/competitions/12239#learn_the_details-dataset). In short, there are 2200 partial labeled and 1800 unlabeled data for training, 100 public cases for validation and 200 hidden cases for the final test.
 We only use the 2200 partial labeled cases. Besides, this challenge also provide pseudo labels. We make the abdomen ROI dataset by changing the all organs labels to 1 and set the tumors to background.
 ## Preprocessing
 We follow the preprocessing of nnUnet. For ROI model, we adopt a simple slice method. For fine segmentation, the target spacing for
