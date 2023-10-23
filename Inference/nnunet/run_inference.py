@@ -138,9 +138,9 @@ if __name__ == "__main__":
     input_folder = args.input_folder
     output_folder = args.output_folder
 
-    model_roi = r"/models/model_roi.pt"
-    model_fine = r"/models/model_fine.pt"
-    model_fine2 = r"/models/model_fine2.pt"
+    model_roi = r"./models/model_roi.pt"
+    model_fine = r"./models/model_fine.pt"
+    model_fine2 = r"./models/model_fine2.pt"
 
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -189,30 +189,30 @@ if __name__ == "__main__":
             continue
 
         roi_box = list(reg[0].bbox)
-        roi_box2 = [0, 0, 0, 0, 0, 0]
-        sum_z = np.sum(seg, axis=(1, 2))
-        sum_y = np.sum(seg, axis=(0, 2))
-        sum_x = np.sum(seg, axis=(0, 1))
-        pos_z = np.argwhere(sum_z > 0)
-        pos_y = np.argwhere(sum_y > 0)
-        pos_x = np.argwhere(sum_x > 0)
-        res_z = get_longest_sequence(pos_z)
-        roi_box2[0] = res_z[0]
-        roi_box2[3] = res_z[-1]
-        res_y = get_longest_sequence(pos_y)
-        roi_box2[1] = res_y[0]
-        roi_box2[4] = res_y[-1]
-        res_x = get_longest_sequence(pos_x)
-        roi_box2[2] = res_x[0]
-        roi_box2[5] = res_x[-1]
-        for i in range(6):
-            if roi_box[i] != roi_box2[i]:
-                seg_itk = GetImageFromArray(seg.astype(np.uint8))
-                WriteImage(seg_itk, output_files[idx])
-                print(output_files[idx], roi_box)
-                print(output_files[idx], roi_box2)
-                break
-        continue
+        # roi_box2 = [0, 0, 0, 0, 0, 0]
+        # sum_z = np.sum(seg, axis=(1, 2))
+        # sum_y = np.sum(seg, axis=(0, 2))
+        # sum_x = np.sum(seg, axis=(0, 1))
+        # pos_z = np.argwhere(sum_z > 0)
+        # pos_y = np.argwhere(sum_y > 0)
+        # pos_x = np.argwhere(sum_x > 0)
+        # res_z = get_longest_sequence(pos_z)
+        # roi_box2[0] = res_z[0]
+        # roi_box2[3] = res_z[-1]
+        # res_y = get_longest_sequence(pos_y)
+        # roi_box2[1] = res_y[0]
+        # roi_box2[4] = res_y[-1]
+        # res_x = get_longest_sequence(pos_x)
+        # roi_box2[2] = res_x[0]
+        # roi_box2[5] = res_x[-1]
+        # for i in range(6):
+        #     if roi_box[i] != roi_box2[i]:
+        #         seg_itk = GetImageFromArray(seg.astype(np.uint8))
+        #         WriteImage(seg_itk, output_files[idx])
+        #         print(output_files[idx], roi_box)
+        #         print(output_files[idx], roi_box2)
+        #         break
+        # continue
 
         roi_box_lower = np.array(roi_box[:3])
         roi_box_upper = np.array(roi_box[3:])
