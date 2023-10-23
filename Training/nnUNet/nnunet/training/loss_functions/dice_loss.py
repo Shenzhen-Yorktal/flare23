@@ -638,3 +638,28 @@ class ClassWeightedMultipleOutputLoss(nn.Module):
                 l += weights[i] * self.loss(x[i], y[i], class_weights)
         return l
 
+
+class DC_and_Focal_Loss(nn.Module):
+    def __init__(self, soft_dice_kwargs, focal_kwargs, weight_focal=1, weight_dice=1, log_dice=False):
+        super(DC_and_Focal_Loss, self).__init__()
+        self.log_dice = log_dice
+        self.weight_dice = weight_dice
+        self.weight_focal = weight_focal
+
+        self.dc = Dynamic_WeightedSoftDiceLoss(apply_nonlin=softmax_helper, **soft_dice_kwargs)
+        self.focal = FocalLoss(**focal_kwargs)
+
+    def forward(self, net_output, target, weight=None):
+        if weight is not None and net_output.device.type == "cuda":
+            weight = weight.cuda(net_output.device.index)
+
+        dc_loss = self.dc(net_output, target, weight)
+        if self.log_dice:
+            dc_loss = -torch.log(-dc_loss)
+
+        focal_loss = self.focal(net_output, target[:, 0].long(), weight)
+
+        result = self.weight_dice * dc_loss + self.weight_focal * focal_loss
+        # result = torch.softmax(self.loss_weights, dim=0) * result
+
+        return result
