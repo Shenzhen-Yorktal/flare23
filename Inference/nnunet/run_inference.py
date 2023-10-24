@@ -254,6 +254,8 @@ if __name__ == "__main__":
             torch.cuda.empty_cache()
 
             current_shape = softmax.shape
+            """这里是根据细分割的尺寸判断是否分块插值恢复，缺点是在Z方向的分块处对不齐; 另一个思路是按类别的维度逐个恢复(最终并不关心各类别概率的绝对大小)
+            当然在实际应用中如果显存够用(取了ROI后尺寸相对较小)可以整体恢复"""
             if size_ac[0] > FINE_SIZE_THRESHOLD:
                 softmax = softmax.detach().cpu()
                 torch.cuda.empty_cache()
