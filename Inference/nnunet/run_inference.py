@@ -57,8 +57,8 @@ def get_model_roi(**kwargs):
         net_roi = torch.load(model_roi)
         net_roi.cuda()
         net_roi.eval()
-        dumpy_data = np.zeros((1, 16, 16, 16), dtype=np.float32)
-        _ = net_roi.predict_3D(dumpy_data, step_size=1, sliding=False, patch_size=None)
+        dummy_data = np.zeros((1, 16, 16, 16), dtype=np.float32)
+        _ = net_roi.predict_3D(dummy_data, step_size=1, sliding=False, patch_size=None)
     return net_roi
 
 
