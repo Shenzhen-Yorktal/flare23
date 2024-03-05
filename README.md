@@ -38,7 +38,7 @@ Now you can train your models.
 
 We train the roi model as follows.
 ```
-python nnunet/run/run_training.py 3d_lowres nnUNetTrainerV2 roi_task_id -f all -p nnUNetPlans_FabiansResUNet_vr
+python nnunet/run/run_training.py 3d_lowres nnUNetTrainerV2_ResencUNet  roi_task_id -f all -p nnUNetPlans_FabiansResUNet_vr
 ```
 We train the organs model as follow:
 ```
