@@ -2,11 +2,11 @@
 This repository is the official implementation of [Fast abdomen organ and tumor segmentation based-on nnUNet](https://openreview.net/pdf?id=oTI5UIgCrY) of Team aladdin5 on FLARE23 challenge. 
 Our work heavily based-on the [old version nnUNetV2](https://github.com/MIC-DKFZ/nnUNet/tree/nnunetv1).  
 
-![Pipeline of our solution](/imgs/pipeline_highres.png)
+![Pipeline of our solution](./imgs/pipeline_highres.png)
 <center>Pipeline of our solution</center>
 
 Details are presented in the [paper](https://openreview.net/pdf?id=oTI5UIgCrY).
-The [Training](/Training), [Inference](/Inference) and [Evaluation](/Evaluation/) are scripts for training models, predict samples and calculate the metrics respectively.
+The [Training](./Training), [Inference](./Inference) and [Evaluation](./Evaluation) are scripts for training models, predict samples and calculate the metrics respectively.
 ## Environments and Requirements
 * Windows 10
 * CPU Intel(R) Core(TM) i7-10700kF CPU@3.80GHz, RAM 16GB x 4, NVIDIA RTX 3090 24G
@@ -56,20 +56,46 @@ python nnunet/run/run_training.py 3d_fullres nnUNetTrainerV2_ResencUNet_finetuni
 You can change the trainer as you need.
  
  ## Inference
- After training, we do a lot of work for accelaration, in the end, we can run inference use scripts in folder [Inference](/Inference/).
+ After training, we do a lot of work for accelaration, in the end, we can run inference use scripts in folder [Inference](./Inference/).
  You can download our pretrained models Here:  
  * [Abdomen ROI extrator](https://pan.baidu.com/s/1ntVpM0tP9U-96ZKqIXIs-w?pwd=xp93)
  * [Abdomen Tumor fine segmentation model](https://pan.baidu.com/s/1q1YgfYB-PboKOW4IcjlKIg?pwd=ecmt)
  * [Abdomen Organs fine segmentation model](https://pan.baidu.com/s/1uQyX0e_gBpnHuiQT00YcnA?pwd=61ac)  
 
-Then put the models into the folder [models](/Inference/nnunet/models) and run:
+Then put the models into the folder [models](./models) and run:
 ```
 python run_inference.py -i path_of_the_input_volumes -o path_for_saving_the_prediction
 ```
+Maybe you should change the path in ```run_inferenc```(line 141-143).
+
+
 By the way, we convert the pretrained model into pt format for saving time. So this Inference script can not work for the model trained by nnUNet directly. If you want predict cases with your own models, you should predict in the nnUNet way.  
+### docker
+We build our docker under Ubuntu. Here is the example of our tree structure.
+```
+/*******/flare23/docker/Dockerfile 
+/*******/flare23/docker/predict.sh 
+/*******/flare23/docker/models 
+/*******/flare23/docker/Inference
+/*******/flare23/docker/flare23_all  #folder of the all validation images.
+/*******/flare23/docker/flare23_test #folder of test images.
+```
+Then you can build docker with command below, the pwd is ```/*******/flare23/docker```.
+```
+docker build -t aladdin5
+```
+To save the docker image
+```
+docker save aladdin5 | gzip -c > aladdin5.tar.gz
+```
+To load the docker
+```
+docker load -i aladdin5.tar.gz
+```
+The other details are displayed on the [FLARE23 Official website.](https://codalab.lisn.upsaclay.fr/competitions/12239#learn_the_details-testing)
 
 ## Evaluation
-To compute the evaluation metrics, run FLARE23_DSC_NSD_Eval.py in [Evaluation](/Evaluation/FLARE23/)
+To compute the evaluation metrics, run FLARE23_DSC_NSD_Eval.py in [Evaluation](./Evaluation/FLARE23/)
 ```
 python FLARE23_DSC_NSD_Eval.py -g ground_truth_path -s save_metric_path -p prediction_path
 ```
@@ -77,11 +103,11 @@ Then you will get a csv file contains DSC scores and NSD scores of each organ an
 
 ## Results
 + <center>Well segmented cases</center>  
-![good](/imgs/well-segmented.jpg)
+![good](./imgs/well-segmented.jpg)
 + <center>Challenging cases</center>  
-![bad](/imgs/challenging.jpg)
+![bad](./imgs/challenging.jpg)
 + <center> Our validation scores </center>
-![scores](/imgs/Results.JPG)
+![scores](./imgs/Results.JPG)
 
 ## Acknowledgement
 We thank the contributors of [public FLARE23 datasets](https://codalab.lisn.upsaclay.fr/competitions/12239#learn_the_details-dataset).

@@ -9,7 +9,7 @@ RUN apt-get update \
   && pip install --upgrade pip -i https://mirrors4.tuna.tsinghua.edu.cn/pypi/web/simple/
 
 ADD models /models/
-ADD nnUNet/nnUNet_double_fine /nnUNet/
+ADD Inference /nnUNet/
 ADD predict.sh ./
 
 RUN mkdir -p /workspace/inputs && mkdir -p /workspace/outputs
