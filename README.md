@@ -92,7 +92,8 @@ To load the docker
 ```
 docker load -i aladdin5.tar.gz
 ```
-The other details are displayed on the [FLARE23 Official website.](https://codalab.lisn.upsaclay.fr/competitions/12239#learn_the_details-testing)
+Also, you can download [our docker image](https://pan.baidu.com/s/1pZAmhHu9JMeicPLLFCg8rA), with extraction code u12q. 
+The other details are displayed on the [FLARE23 Official website.](https://codalab.lisn.upsaclay.fr/competitions/12239#learn_the_details-testing).
 
 ## Evaluation
 To compute the evaluation metrics, run FLARE23_DSC_NSD_Eval.py in [Evaluation](./Evaluation/FLARE23/)
@@ -102,12 +103,13 @@ python FLARE23_DSC_NSD_Eval.py -g ground_truth_path -s save_metric_path -p predi
 Then you will get a csv file contains DSC scores and NSD scores of each organ and tumor for every samples.
 
 ## Results
-+ <center>Well segmented cases</center>  
+###Well segmented cases
 ![good](./imgs/well-segmented.jpg)
-+ <center>Challenging cases</center>  
+###Challenging cases
 ![bad](./imgs/challenging.jpg)
-+ <center> Our validation scores </center>
-![scores](./imgs/Results.JPG)
+###Validation and final test performance
+![result](./imgs/Results.JPG)
+
 
 ## Acknowledgement
 We thank the contributors of [public FLARE23 datasets](https://codalab.lisn.upsaclay.fr/competitions/12239#learn_the_details-dataset).
